@@ -1,39 +1,180 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
+/*
+High Level Planning
+- Component
+  Header
+    - Logo
+    - Nav Item
+  Body
+    - Search
+    - Restaurant Container
+      - RestaurantCard
+  footer
+    - Copyright
+    - link
+    - address
+    - Contact
+*/
+const api = {
+  "restaurants": [
+    {
+      "id": 201,
+      "name": "Spicy Biryani House",
+      "cuisine": ["Indian", "Biryani"],
+      "rating": 4.3,
+      "reviewsCount": 1240,
+      "deliveryTime": "30-40 mins",
+      "costForTwo": 400,
+      "location": {
+        "area": "Kakadeo",
+        "city": "Kanpur",
+        "coordinates": {
+          "lat": 26.4499,
+          "lng": 80.3319
+        }
+      },
+      "isOpen": true,
+      "menu": [
+        { "id": 1, "name": "Chicken Biryani", "price": 250, "isVeg": false },
+        { "id": 2, "name": "Veg Biryani", "price": 180, "isVeg": true }
+      ]
+    },
+    {
+      "id": 202,
+      "name": "Pizza Corner",
+      "cuisine": ["Italian", "Fast Food"],
+      "rating": 4.1,
+      "reviewsCount": 980,
+      "deliveryTime": "25-35 mins",
+      "costForTwo": 500,
+      "location": {
+        "area": "Govind Nagar",
+        "city": "Kanpur",
+        "coordinates": {
+          "lat": 26.4490,
+          "lng": 80.2980
+        }
+      },
+      "isOpen": true,
+      "menu": [
+        { "id": 3, "name": "Margherita Pizza", "price": 200, "isVeg": true },
+        { "id": 4, "name": "Farmhouse Pizza", "price": 350, "isVeg": true }
+      ]
+    },
+    {
+      "id": 203,
+      "name": "Burger Hub",
+      "cuisine": ["American", "Fast Food"],
+      "rating": 4.0,
+      "reviewsCount": 670,
+      "deliveryTime": "20-30 mins",
+      "costForTwo": 300,
+      "location": {
+        "area": "Rawatpur",
+        "city": "Kanpur",
+        "coordinates": {
+          "lat": 26.4785,
+          "lng": 80.2945
+        }
+      },
+      "isOpen": false,
+      "menu": [
+        { "id": 5, "name": "Chicken Burger", "price": 150, "isVeg": false },
+        { "id": 6, "name": "Veg Burger", "price": 120, "isVeg": true }
+      ]
+    },
+    {
+      "id": 204,
+      "name": "South Spice",
+      "cuisine": ["South Indian"],
+      "rating": 4.5,
+      "reviewsCount": 1500,
+      "deliveryTime": "35-45 mins",
+      "costForTwo": 350,
+      "location": {
+        "area": "Arya Nagar",
+        "city": "Kanpur",
+        "coordinates": {
+          "lat": 26.4800,
+          "lng": 80.3150
+        }
+      },
+      "isOpen": true,
+      "menu": [
+        { "id": 7, "name": "Masala Dosa", "price": 120, "isVeg": true },
+        { "id": 8, "name": "Idli Sambhar", "price": 80, "isVeg": true }
+      ]
+    }
+  ]
+}
 
-// const parent = React.createElement("div" , {id: "parent"},
-//   React.createElement("div", {id:"child"}, 
-//     [React.createElement("h1", {} , "I'm h1 tag"),
-//       React.createElement("h1", {} , "I'm h1 tag")]
-//   )
-// );
+// console.log(api);
+const Header = () => {
+  return (
+    <div className="header">
+      <div className="logo-container">
+        <img
+          className="logo"
+          src="https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png?nwm=1&nws=1&industry=fast-food&sf=&txt_keyword=All"
+        />
+      </div>
+      <div className="nav-items">
+        <ul>
+          <li>Home</li>
+          <li>About Us</li>
+          <li>Contact Us</li>
+          <li>Cart </li>
+        </ul>
+      </div>
+    </div>
+  );
+};
 
-//JSX
-// const jsxHeading = (
-//   <div>
-// <h1 className = "heading">This is React</h1>
-//   <h2 className = "heading">This is ReactDOM</h2>
-//   </div>
-// );
+const RestaurantCard = (props) => {
+  const {resData} = props;
+  const {name , cuisine , costForTwo , deliveryTime , rating}  = resData;
+  return (
+    <div className="res-card">
+      <div className="res-img">
+        <img
+          className="res-logo"
+          src="https://img.freepik.com/free-photo/top-view-table-full-food_23-2149209253.jpg?semt=ais_incoming&w=740&q=80"
+        />
+      </div>
 
-const JsxHeading = () => (
-  <div>
-<h1 className = "heading">This is React</h1>
-  <h2 className = "heading">This is ReactDOM</h2>
-  </div>
-);
-const ele = 1000;
+      <h3>{name}</h3>
+      <h4>{cuisine.join(', ')}</h4>
+      <h4>{rating}</h4>
+       <h4>{costForTwo} for two</h4>
+      <h4> {deliveryTime}</h4>
+    </div>
+  );
+};
 
+const Body = () => {
+  return (
+    <div className="body">
+      <div className="search">Search</div>
+      <div className="res-container">
+        {
 
-//React Functional Component
-const HeadingComponent = () => { return (
-  <div>
-    {ele}
-    <JsxHeading />
-    <h1>This is a React Component</h1>
-</div>)};
+           api.restaurants.map((res) => <RestaurantCard  key = {res.id} resData = {res}/>)
+        }
+      </div>
+    </div>
+  );
+};
 
+const AppLayout = () => {
+  return (
+    <div className="app">
+      <Header />
+      <Body />
+    </div>
+  );
+};
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<HeadingComponent />);
+root.render(<AppLayout />);
