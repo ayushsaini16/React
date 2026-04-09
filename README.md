@@ -30,3 +30,13 @@ Two types of export/import
 - Named export/import (used in export multiple things)
   - export const Component/variables;
   - import {Component} from "path"  
+
+# React Hooks
+
+- Hooks can only be called inside React functional Components
+- Hooks can only be called at the top level of Components
+- Hooks cannot be conditional
+
+SuperPowerful Variable in react
+- useState 
+- useEffect
