@@ -40,3 +40,28 @@
 .res-logo {
   width: 100%;
 }
+
+.shimmer-container{
+  display: flex;
+   gap: 10px;
+   flex-wrap: wrap;
+}
+
+.shimmer-card{
+  width: 200px;
+  height: 200px;
+  background-color: grey;
+}
+
+.login{
+  cursor:pointer;
+}
+
+.filter{
+  display: flex;
+  margin:5px;
+}
+
+.filter-btn{
+  margin: 0px 10px;
+} 
