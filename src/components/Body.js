@@ -1,14 +1,17 @@
 import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
-import api from "../utils/mockdata";
 import Shimmer from "./Shimmer";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   const [listOfRestaurant, setlistRestaurant] = useState([]); //[]-> Initial Value
-  
-  const[OldListRestaurant, setOldListRestaurant] = useState([]);
+
+  const [OldListRestaurant, setOldListRestaurant] = useState([]);
 
   const [searchText, setsearchText] = useState("");
+
+  const resid = useParams();
   useEffect(() => {
     fetchData();
   }, []);
@@ -22,7 +25,7 @@ const Body = () => {
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants,
     );
-     setOldListRestaurant(
+    setOldListRestaurant(
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants,
     );
@@ -41,17 +44,16 @@ const Body = () => {
           <input
             type="text"
             value={searchText}
-            onChange={(e) => 
-            {
+            onChange={(e) => {
               setsearchText(e.target.value);
-              
             }}
           ></input>
-          <button onClick={() => {
-            setlistRestaurant(filterSearch);
-            //  setlistRestaurant(OldListRestaurant);
-          }
-          }>
+          <button
+            onClick={() => {
+              setlistRestaurant(filterSearch);
+              //  setlistRestaurant(OldListRestaurant);
+            }}
+          >
             Search
           </button>
         </div>
@@ -59,7 +61,7 @@ const Body = () => {
           className="filter-btn"
           onClick={() =>
             setlistRestaurant(
-              listOfRestaurant.filter((res) => res.info.avgRating > 4),
+              OldListRestaurant.filter((res) => res.info.avgRating > 4),
             )
           }
         >
@@ -68,7 +70,9 @@ const Body = () => {
       </div>
       <div className="res-container">
         {listOfRestaurant.map((res) => (
-          <RestaurantCard key={res.info.id} resData={res.info} />
+          <Link key={res.info.id} to={"/restaurant/" + res.info.id}>
+            <RestaurantCard resData={res.info} />
+          </Link>
         ))}
       </div>
     </div>
