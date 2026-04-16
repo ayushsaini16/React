@@ -13,12 +13,12 @@ class UserClass extends React.Component{
      
     componentDidMount(){
         console.log("ComponentDidMount")
+        //Api call here
     }
-
+    
     render() {
          const{name , location} = this.props;
          const{count ,count2} = this.state;
-         debugger;
          console.log("render");
         return (
            <div className = "user-card">

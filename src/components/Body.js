@@ -1,39 +1,28 @@
 import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
-import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import useListOfRestaurant from "../utils/useListOfRestaurant";
+import useOnlineStatus from "../utils/useOnlineStatus";
+
 
 const Body = () => {
-  const [listOfRestaurant, setlistRestaurant] = useState([]); //[]-> Initial Value
 
-  const [OldListRestaurant, setOldListRestaurant] = useState([]);
-
+  const [listOfRestaurant, OldListRestaurant , setlistRestaurant] = useListOfRestaurant(); //[]-> Initial Value
   const [searchText, setsearchText] = useState("");
 
-  const resid = useParams();
-  useEffect(() => {
-    fetchData();
-  }, []);
 
-  const fetchData = async () => {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.46310&lng=80.34790&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING",
-    );
-    const json = await data.json();
-    setlistRestaurant(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants,
-    );
-    setOldListRestaurant(
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants,
-    );
-  };
 
   const filterSearch = OldListRestaurant.filter((res) =>
     res.info.name.toLowerCase().includes(searchText.toLowerCase()),
   );
+
+ 
+ const status = useOnlineStatus();
+
+     if(status === false){
+    return <h1>You are offline!</h1>
+  }
 
   return listOfRestaurant.length === 0 ? (
     <Shimmer />
@@ -50,7 +39,7 @@ const Body = () => {
           ></input>
           <button
             onClick={() => {
-              setlistRestaurant(filterSearch);
+               setlistRestaurant(filterSearch);
               //  setlistRestaurant(OldListRestaurant);
             }}
           >
@@ -61,7 +50,7 @@ const Body = () => {
           className="filter-btn"
           onClick={() =>
             setlistRestaurant(
-              OldListRestaurant.filter((res) => res.info.avgRating > 4),
+              OldListRestaurant.filter((res) => res.info.avgRating > 4.5),
             )
           }
         >

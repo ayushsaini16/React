@@ -1,14 +1,11 @@
 import { items } from "../utils/mockdata";
 import {  useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import useRestaurantMenuitems from "../utils/useRestaurantMenuItems";
 import { useParams  } from "react-router-dom";
 const RestaurantMenu = () => {
-  const [listofitems, setlistofitems] = useState(null);
-  const {resid} = useParams;
-  console.log(resid); 
-useEffect(()=>{
-  setlistofitems(items);
-})
+  
+  const listofitems = useRestaurantMenuitems();
 
 
 if(listofitems === null) return <Shimmer />
