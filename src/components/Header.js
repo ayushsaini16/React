@@ -9,12 +9,12 @@ const Header = () => {
   const status = useOnlineStatus();
 
   return (
-    <div className="header">
-      <div className="logo-container">
+    <div className="flex justify-between bg-amber-100 shadow-lg p-1 mt-1">
+      <div className="w-50">
         <img className="logo" src={LOGO_URL} />
       </div>
-      <div className="nav-items">
-        <ul>
+      <div className="">
+        <ul className="flex gap-5 p-3 mt-10">
           <li>
             Online Status: {status === true ? "✅" : "🔴"}
           </li>
@@ -29,7 +29,7 @@ const Header = () => {
           </li>
           <li>Cart </li>
           <button
-            className="btnLogin"
+            className="cursor-pointer"
             onClick={() => {
               btnName === "Login" ? setbtnName("LogOut") : setbtnName("Login");
             }}
