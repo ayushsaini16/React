@@ -1,4 +1,4 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard , {withPromotedLabel} from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
@@ -10,8 +10,8 @@ const Body = () => {
 
   const [listOfRestaurant, OldListRestaurant , setlistRestaurant] = useListOfRestaurant(); //[]-> Initial Value
   const [searchText, setsearchText] = useState("");
-
-
+  
+  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
 
   const filterSearch = OldListRestaurant.filter((res) =>
     res.info.name.toLowerCase().includes(searchText.toLowerCase()),
@@ -60,7 +60,10 @@ const Body = () => {
       <div className="flex mt-5 flex-wrap justify-center">
         {listOfRestaurant.map((res) => (
           <Link key={res.info.id} to={"/restaurant/" + res.info.id}>
-            <RestaurantCard resData={res.info} />
+             {(res?.info?.name !== null) ?
+                  <RestaurantCardPromoted resData={res.info}  />
+               : <RestaurantCard resData={res.info} />
+              }
           </Link>
         ))}
       </div>

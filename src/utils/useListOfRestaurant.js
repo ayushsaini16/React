@@ -7,7 +7,7 @@ const useListOfRestaurant = ()=>{
 
     const[OldListOfRestaurant, setOldListOfRestaurant] = useState([]);
 
-   
+    console.log(ListOfRestaurant);
 
     useEffect(() => {
     fetchData();
