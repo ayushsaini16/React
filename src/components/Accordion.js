@@ -19,7 +19,7 @@ const Accordion = (props)=>{
                 </div>
                 <div>
                 { showItems && data?.itemCards?.map((res)=>(
-                    <ItemCategories key={res.card.info.id}  resCategory = {res} />
+                    <ItemCategories key={res.card.info.id}  resCategory = {res}  />
                 ))}
 
                 </div>   
